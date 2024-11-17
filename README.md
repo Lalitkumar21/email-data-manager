@@ -1,5 +1,5 @@
 
-https://github.com/user-attachments/assets/56cecd58-b3c1-46c5-91e6-879ae8834129
+
 # 📧 Email Data Manager
 
 A powerful Streamlit application for managing email campaigns with AI-generated content and SMTP integration. Streamline your email communications with automated content generation and efficient bulk sending capabilities.
@@ -122,8 +122,7 @@ Jane Smith,jane@example.com,XYZ Inc
 Watch the full tutorial on how to use the Email Data Manager:
 
 
-
-https://github.com/user-attachments/assets/679fb2a5-7210-4eec-b2ae-1bf8b72f3d21
+https://github.com/user-attachments/assets/56cecd58-b3c1-46c5-91e6-879ae8834129
 
 
 ## 🤝 Contributing
