@@ -96,10 +96,10 @@ def file_upload():
             return None, None, None
 
 def setup_groq_client():
-    os.environ["GROQ_API_KEY"] = "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"
+    os.environ["GROQ_API_KEY"] = "**Update your Groq API here**"
 
     """Initialize Groq client with API key."""
-    api_key = os.getenv("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") 
+    api_key = os.getenv("**Update your Groq API here**") 
     return groq.Groq(api_key=api_key)
 
 def generate_custom_content(client: groq.Groq, prompt_template: str, row_data: Dict[Any, Any]) -> str:
