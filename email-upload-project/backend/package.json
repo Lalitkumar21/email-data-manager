@@ -1,0 +1,25 @@
+{
+  "name": "email-upload-project",
+  "version": "1.0.0",
+  "description": "Email upload and management project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.0.0",
+    "@google-cloud/ai-platform": "^1.0.0",
+    "cors": "^2.8.5",
+    "exceljs": "^4.3.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.6.3",
+    "whatwg-url": "^8.7.0",
+    "socket.io": "^4.7.4"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Data Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/scripts.js" defer></script>
+    <script>
+        // Check authentication status before DOM loads
+        if (sessionStorage.getItem('emailVerified') === 'true') {
+            document.documentElement.classList.add('authenticated');
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <!-- <img src="e-mail-symbol_1f4e7.png" alt="Email Manager Icon"> -->
+         <span class="title_emoji">📧</span>
+        <h1>Email Data Manager</h1>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-button active" data-tab="email-config">Email Configuration</button>
+        <button class="tab-button" data-tab="upload-data">Upload Data</button>
+        <button class="tab-button" data-tab="send-email">Send Email</button>
+        <button class="tab-button" data-tab="email-analytics">Analytics</button>
+    </div>
+
+    <div class="tab-content active" id="email-config">
+        <!-- Email Configuration Section -->
+        <div class="email-config-section">
+            <div class="config-title">
+                <span>✉️</span>
+                <span>Email Configuration</span>
+            </div>
+            <div class="config-container">
+                <form id="email-config-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">App Password</label>
+                        <input type="password" id="password" required placeholder="Enter your Gmail App Password">
+                        <small class="helper-text">Use an <a href="https://support.google.com/accounts/answer/185833" target="_blank">App Password</a> from your Google Account</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="ai-provider">AI Provider</label>
+                        <select id="ai-provider" required>
+                            <option value="openai">OpenAI (GPT-3.5/4)</option>
+                            <option value="anthropic">Anthropic (Claude)</option>
+                            <option value="gemini">Google Gemini</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ai-key">OpenAI API Key</label>
+                        <input type="password" id="ai-key" placeholder="Enter your AI provider API key">
+                        <small class="helper-text">
+                            <!-- Removed API help link -->
+                        </small>
+                    </div>
+                    <div id="error-message" class="error-message"></div>
+                    <button type="submit" class="verify-button">
+                        <span class="button-text">Verify Credentials</span>
+                        <span class="loading-indicator"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Add this new section for API key management -->
+        <div class="api-management-section" style="margin-top: 2rem;">
+            <h3>AI Features Management</h3>
+            <div class="api-status"></div>
+            <div class="form-group">
+                <input type="password" id="update-openai-key" placeholder="Enter new OpenAI API key">
+                <button type="button" id="update-api-key" class="secondary-button">Update API Key</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="upload-data">
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <div class="upload-title">
+                <span>📁</span>
+                <span>Upload Your Data</span>
+            </div>
+
+            <div class="upload-container">
+                <img src="../cloud-upload-regular-24 (1).png" alt="" class="cloud-icon">
+                <p class="upload-text">Drag and drop file here</p>
+                <p class="file-limit">Limit 200MB per file • CSV, XLSX, XLS</p>
+                <label for="file-upload" class="browse-button">Browse files</label>
+                <input 
+                    type="file" 
+                    id="file-upload" 
+                    class="browse-button" 
+                    accept=".csv, .xlsx, .xls" 
+                    hidden>
+            </div>
+        </div>
+
+        <!-- Supported Files Section -->
+        <div class="supported-files">
+            <h2>Supported Files</h2>
+            <ul>
+                <li>• CSV files (.csv)</li>
+                <li>• Excel files (.xlsx, .xls)</li>
+            </ul>
+        </div>
+
+        <!-- Uploaded File Data -->
+        <div class="file-data">
+            <div id="file-data-content"></div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="send-email">
+        <div class="email-compose-section">
+            <!-- API Required Message - initially hidden -->
+            <div id="api-required-message" style="display: none;">
+                <div class="api-notice">
+                    <h3>🤖 AI Features Not Configured</h3>
+                    <p>To use AI-powered email generation, please add your OpenAI API key.</p>
+                    <button type="button" class="configure-api-button" onclick="switchTab('email-config')">Configure API Key</button>
+                </div>
+            </div>
+
+            <!-- Add inside the email-compose-section, before the compose-container -->
+            <div class="email-analytics">
+                <h2>Email Analytics</h2>
+                <div class="analytics-grid">
+                    <div class="analytics-card total">
+                        <h3>Total Emails</h3>
+                        <span id="total-emails">0</span>
+                    </div>
+                    <div class="analytics-card success">
+                        <h3>Sent Successfully</h3>
+                        <span id="sent-emails">0</span>
+                    </div>
+                    <div class="analytics-card failed">
+                        <h3>Failed</h3>
+                        <span id="failed-emails">0</span>
+                    </div>
+                    <div class="analytics-card pending">
+                        <h3>In Progress</h3>
+                        <span id="pending-emails">0</span>
+                    </div>
+                </div>
+                <div class="send-progress">
+                    <div class="progress-bar">
+                        <div id="send-progress-bar" class="progress"></div>
+                    </div>
+                    <span id="progress-text">0%</span>
+                </div>
+                <div class="email-history">
+                    <h3>Recent Activity</h3>
+                    <div id="email-history-list"></div>
+                </div>
+            </div>
+
+            <!-- Regular Email Compose Section -->
+            <div id="email-compose-content">
+                <div class="compose-title">
+                    <span>✉️</span>
+                    <span>Compose Group Email</span>
+                </div>
+                <div class="compose-container">
+                    <form id="email-compose-form">
+                        <div class="form-group">
+                            <label for="email-column">Email Column</label>
+                            <select id="email-column" required>
+                                <option value="">Select email column</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="email-subject">Subject</label>
+                            <input type="text" id="email-subject" required placeholder="Enter email subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="body-type">Message Body Type</label>
+                            <select id="body-type" required>
+                                <option value="manual">Write Manually</option>
+                                <option value="ai">Generate with AI</option>
+                            </select>
+                        </div>
+                        <!-- AI Prompt Section -->
+                        <div class="form-group ai-section" style="display: none;">
+                            <label for="ai-prompt">AI Prompt</label>
+                            <textarea id="ai-prompt" placeholder="Describe what kind of email you want to generate..."></textarea>
+                            <button type="button" id="generate-content" class="generate-button">Generate Content</button>
+                        </div>
+                        <!-- Manual Body Section -->
+                        <div class="form-group manual-section">
+                            <label for="email-body">Message Body</label>
+                            <div class="template-variables">
+                                <span>Available variables:</span>
+                                <div id="variables-list"></div>
+                            </div>
+                            <textarea id="email-body" required placeholder="Enter your message. Use {columnName} to insert data from file."></textarea>
+                        </div>
+                        <div class="recipients-preview"></div>
+                        <button type="submit" class="send-button" disabled>
+                            Send Emails
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="email-analytics">
+        <div class="analytics-dashboard">
+            <h2>Email Campaign Analytics</h2>
+            <div class="analytics-grid">
+                <div class="analytics-card total">
+                    <h3>Total Emails</h3>
+                    <span id="total-emails">0</span>
+                </div>
+                <div class="analytics-card success">
+                    <h3>Sent Successfully</h3>
+                    <span id="sent-emails">0</span>
+                </div>
+                <div class="analytics-card failed">
+                    <h3>Failed</h3>
+                    <span id="failed-emails">0</span>
+                </div>
+                <div class="analytics-card pending">
+                    <h3>In Progress</h3>
+                    <span id="pending-emails">0</span>
+                </div>
+            </div>
+            
+            <div class="campaign-progress">
+                <h3>Current Campaign Progress</h3>
+                <div class="send-progress">
+                    <div class="progress-bar">
+                        <div id="send-progress-bar" class="progress"></div>
+                    </div>
+                    <span id="progress-text">0%</span>
+                </div>
+            </div>
+
+            <div class="email-history">
+                <h3>Email Activity Log</h3>
+                <div class="history-container">
+                    <div id="email-history-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
