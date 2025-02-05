@@ -1,0 +1,12 @@
+Name,Company Name,Email Address,Location,Job Title,Phone Number,Department,Account Status
+John Doe,Acme Corp,john.doe@acmecorp.com,"New York, NY",Marketing Manager,+1-212-555-1234,Marketing,Active
+Alice Johnson,TechSolutions,alice.johnson@techsol.com,"San Francisco, CA",Senior Developer,+1-415-555+9876,Development,Active
+Bob Smith,Future Inc.,bob.smith@futureinc.com,"Chicago, IL",HR Manager,+1-312-555-5432,Human Resources,Inactive
+Sarah White,GreenTech,sarah.white@greentech.com,"Austin, TX",Product Manager,+1-512-555-6578,Product,Active
+Michael Brown,Stellar Group,michael.brown@stellar.com,"Los Angeles, CA",Sales Director,+1-213-555-7890,Sales,Pending
+Jessica Green,CloudNet,jessica.green@cloudnet.com,"Seattle, WA",CEO,+1-206-555-1111,Executive,Active
+David Clark,Innovate Inc.,david.clark@innovate.com,"Boston, MA",CTO,+1-617-555-2222,Engineering,Active
+Emily Davis,Webify Ltd.,emily.davis@webify.com,"Miami, FL",UX Designer,+1-305-555-3333,Design,Active
+Chris Wilson,BuildCo,chris.wilson@buildco.com,"Denver, CO",Project Manager,+1-720-555-4444,Operations,Suspended
+Natalie Scott,DataSense,natalie.scott@datasense.com,"Chicago, IL",Data Scientist,+1-312-555-5555,Data Science,Active
+Lalit Kumar,LKC,lkchugh2004@gmail.com,India,Cyber Analyst,9.21E+09,Cyber Security,Active
